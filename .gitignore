@@ -1,2 +1,9 @@
 
 Temp/
+Logs/
+
+Library/Artifacts
+Library/BurstCache
+Library/PackageCache
+Library/ShaderCache
+Library/StateChache

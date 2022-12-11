@@ -122,6 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9190277732097454890}
   - component: {fileID: 6715118574557866191}
+  - component: {fileID: 7676130825419925273}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -159,6 +160,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionCircle: {fileID: 9147713623994546573}
+--- !u!195 &7676130825419925273
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7628907494448856561}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.56
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &9147713623994546573
 GameObject:
   m_ObjectHideFlags: 0

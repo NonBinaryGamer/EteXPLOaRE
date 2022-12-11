@@ -69,16 +69,16 @@ public class UnitsSelection : MonoBehaviour
                 Camera.main.WorldToViewportPoint(unit.transform.position)
             );
             if (inBounds)
-                unit.GetComponent<UnitManager>().Select();
+                unit.GetComponent<UnitController>().Select();
             else
-                unit.GetComponent<UnitManager>().Deselect();
+                unit.GetComponent<UnitController>().Deselect();
         }
     }
 
     private void _DeselectAllUnits()
     {
-        List<UnitManager> selectedUnits = new List<UnitManager>(Globals.SELECTED_UNITS);
-        foreach (UnitManager um in selectedUnits)
+        List<UnitController> selectedUnits = new List<UnitController>(Globals.SELECTED_UNITS);
+        foreach (UnitController um in selectedUnits)
             um.Deselect();
     }
 

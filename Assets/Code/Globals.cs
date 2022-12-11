@@ -4,5 +4,5 @@ public static class Globals
 {
     // ...
 
-    public static List<UnitManager> SELECTED_UNITS = new List<UnitManager>();
+    public static List<UnitController> SELECTED_UNITS = new List<UnitController>();
 }
