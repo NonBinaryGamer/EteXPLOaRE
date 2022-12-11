@@ -76,6 +76,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1830315036739891784, guid: d601ca78fcad3254ebe95269dc102a90,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1830315036739891784, guid: d601ca78fcad3254ebe95269dc102a90,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 5.58
+      objectReference: {fileID: 0}
     - target: {fileID: 2510953303505637377, guid: d601ca78fcad3254ebe95269dc102a90,
         type: 3}
       propertyPath: m_Name
@@ -185,6 +195,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7549876878982363795, guid: d601ca78fcad3254ebe95269dc102a90,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7549876878982363795, guid: d601ca78fcad3254ebe95269dc102a90,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 5.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 7607096212618086469, guid: d601ca78fcad3254ebe95269dc102a90,
+        type: 3}
+      propertyPath: objectName
+      value: Rocket
       objectReference: {fileID: 0}
     - target: {fileID: 9185031591431990481, guid: d601ca78fcad3254ebe95269dc102a90,
         type: 3}

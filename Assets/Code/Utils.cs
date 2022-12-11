@@ -1,7 +1,27 @@
+using System;
 using UnityEngine;
 
 public static class Utils
 {
+    [Serializable]
+    public class InventoryItem {
+        public bool in_use;
+        public string name;
+        public int count;
+        public int max;
+        public int required;
+
+        public InventoryItem() {
+            in_use = false;
+        }
+
+        public InventoryItem(string a_name, int a_count) {
+            in_use = true;
+            name = a_name;
+            count = a_count;
+        }
+    }
+
     static Texture2D _boxTexture;
     public static Texture2D BoxTexture
     {

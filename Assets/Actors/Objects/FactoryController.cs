@@ -1,0 +1,161 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+
+public class FactoryController : MonoBehaviour
+{
+    public Utils.InventoryItem[] inputs;
+    
+    public Utils.InventoryItem output;
+    private int _output_count;
+
+    public int OutputCount
+    {
+        get { return _output_count; }
+        set { 
+            _output_count = value; 
+            output.count = _output_count;
+            label_Outputs.text = "Ready: " + OutputCount.ToString() + " " + output.name;
+        }
+    }
+
+    private int _current_staff;
+
+    public int CurrentStaff
+    {
+        get { return _current_staff; }
+        set { 
+            _current_staff = value; 
+            label_staff.text = "Staff is " + CurrentStaff.ToString() + "/" + required_staff.ToString();
+        }
+    }
+
+
+    public int required_staff;
+    public float timer_max;
+    private float timer_current = 0f;
+
+    private IntractableController intractableController;
+
+
+    public TMP_Text label_staff;
+    public TMP_Text label_Inputs;
+    public TMP_Text label_Outputs;
+
+
+    private void Awake() {
+        intractableController = GetComponent<IntractableController>();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        OutputCount = 0;
+
+        label_Inputs.enabled = false;
+        label_Inputs.enabled = !CheckInputs();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        HandleObjectState(intractableController.State);
+    }
+
+    public void HandleObjectState(IntractableController.ObjectState state)
+    {
+        switch (state)
+        {
+            case IntractableController.ObjectState.IDLE:
+                return;
+            case IntractableController.ObjectState.INTERACTION_START:
+                CurrentStaff += 1;
+                GetResourcesFromUnit();
+                if (CheckInputs()) {
+                    label_Inputs.enabled = false;
+                    intractableController.State = IntractableController.ObjectState.WORKING;
+                }
+                else {
+                    label_Inputs.enabled = true;
+                    intractableController.State = IntractableController.ObjectState.INSUFFICIENT_RESOURCES;
+                }
+                break;
+            case IntractableController.ObjectState.INTERACTION_END:
+                CurrentStaff -= 1;
+                GiveResourcesToUnit();
+                intractableController.State = IntractableController.ObjectState.IDLE;
+                break;
+            case IntractableController.ObjectState.BEING_MOVED:
+                break;
+            case IntractableController.ObjectState.WORKING:
+                if (OutputCount >= output.max) {
+                    intractableController.State = IntractableController.ObjectState.OUTPUT_FULL;
+                }
+
+                if (_current_staff < required_staff) {
+                    intractableController.State = IntractableController.ObjectState.INSUFFICIENT_STAFF;
+                }
+                
+                timer_current += Time.deltaTime;
+
+                if (timer_current >= timer_max) {
+                    timer_current = 0f;
+                    OutputCount += 1;
+                }
+                break;
+            case IntractableController.ObjectState.BROKEN:
+                break;
+            case IntractableController.ObjectState.OUTPUT_FULL:
+                break;
+            case IntractableController.ObjectState.INSUFFICIENT_RESOURCES:
+                break;
+            case IntractableController.ObjectState.INSUFFICIENT_STAFF:
+                break;
+        }
+    }
+
+    private void GetResourcesFromUnit() {
+        foreach (GameObject go in intractableController.interactive_units) {
+            UnitController unit = go.GetComponent<UnitController>();
+
+            foreach(Utils.InventoryItem item in inputs) {
+                if (item.count < item.max) {
+                    Debug.Log("Taking " + item.name + " from " + unit.UnitName);
+                    item.count += unit.TakeItem(item.name).count;
+                }
+            }
+        }
+    }
+
+    private void GiveResourcesToUnit() {
+        foreach (GameObject go in intractableController.interactive_units) {
+            UnitController unit = go.GetComponent<UnitController>();
+            if (output.count > 0) {
+                Debug.Log("Giving " + output.count + " " + output.name + " to " + unit.UnitName);
+                if (unit.GiveItem(output)) {
+                    OutputCount = 0;
+                }
+            }
+        }
+
+    }
+
+    private bool CheckInputs() {
+        bool inputs_valid = true;
+
+        string output_string = "Missing ";
+
+        foreach(Utils.InventoryItem factoryInput in inputs) {
+            if (factoryInput.count < factoryInput.required) {
+                output_string += (factoryInput.required - factoryInput.count).ToString() + " " + factoryInput.name;
+                inputs_valid = false;
+            }
+        }
+
+        label_Inputs.text = output_string;
+        return inputs_valid;
+    }
+
+}
