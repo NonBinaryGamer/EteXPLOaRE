@@ -2,13 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using TMPro;
+
 public class UnitManager : MonoBehaviour
 {
+
+    public GameObject SelectedUnitsLabel;
+    private TMP_Text selected_units_label;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        selected_units_label = SelectedUnitsLabel.GetComponent<TMP_Text>();
     }
 
     // Update is called once per frame
@@ -24,5 +29,16 @@ public class UnitManager : MonoBehaviour
                 }
             }
         }
+
+        if (Globals.SELECTED_UNITS.Count > 0) {
+            string unit_string = "Selected Units: \n";
+
+            foreach(UnitController unit in Globals.SELECTED_UNITS) {
+                unit_string += unit.ToString() + "\n";
+            }
+            selected_units_label.text = unit_string;
+            selected_units_label.enabled = true;
+        }
+    
     }
 }

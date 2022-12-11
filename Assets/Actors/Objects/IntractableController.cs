@@ -29,6 +29,7 @@ public class IntractableController : MonoBehaviour
             _objectName = value;
             type_label.text = _objectName.ToString();
         }
+        get {return _objectName;}
     }
 
     public GameObject interaction_model;
@@ -79,6 +80,15 @@ public class IntractableController : MonoBehaviour
         if (other.tag.CompareTo("Unit") == 0) {
             State = ObjectState.INTERACTION_END;
             units_to_remove.Add(other.gameObject);
+            UnitController unit = other.gameObject.GetComponent<UnitController>();
+            unit.StopWork();
+        }
+    }
+
+    private void OnTriggerStay(Collider other) {
+        if (other.tag.CompareTo("Unit") == 0) {
+            UnitController unit = other.gameObject.GetComponent<UnitController>();
+            unit.DoWork(ObjectName);
         }
     }
 }

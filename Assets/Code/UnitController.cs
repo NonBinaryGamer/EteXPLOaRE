@@ -3,16 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using TMPro;
 
 public class UnitController : MonoBehaviour
 {
-    public TMPro.TMP_Text label_inventory;
-    public TMPro.TMP_Text label_name;
+    public GameObject NameLabel;
+    private TMP_Text label_name;
     public GameObject selectionCircle;
     public string UnitName = "Honest Explorer";
 
     public Utils.InventoryItem Inventory = null;
     private NavMeshAgent navMeshAgent;
+
+    private UnitState _unitState;
+    public UnitState unitState {get; set;}
+    private string target_object;
+
+    public enum UnitState
+    {
+        IDLE,
+        WALKING,
+        OPERATING,
+    }
 
     // public Utils.InventoryItem Inventory {
     //     get { return _inventory; }
@@ -33,20 +45,53 @@ public class UnitController : MonoBehaviour
     }
 
     private void Start() {
+        label_name = NameLabel.GetComponent<TMP_Text>();
+
         label_name.text = UnitName;
-        label_inventory.enabled = false;
+        unitState = UnitState.IDLE;
     }
 
     private void Update() {
-        if (Inventory != null) {
-            label_inventory.text = "Caring: " + Inventory.count + " " + Inventory.name;
-            label_inventory.enabled = true;
+        if (navMeshAgent == null) {
+            navMeshAgent = GetComponent<NavMeshAgent>();
         }
-        else {
-            label_inventory.enabled = false;
+
+        if (unitState != UnitState.OPERATING) {
+            if (navMeshAgent.velocity.magnitude < 0.1f) {
+                unitState = UnitState.IDLE;
+            }
+            else {
+                unitState = UnitState.WALKING;
+            }
         }
     }
 
+    override public string ToString() {
+        string output_string = "";
+        
+        if (unitState == UnitState.OPERATING) {
+            output_string = UnitName + " is operating " + target_object;
+        }
+        else if (unitState == UnitState.WALKING) {
+            
+            if (Inventory != null && Inventory.in_use) {
+                output_string = UnitName + " is walking with " + Inventory.count + " " + Inventory.name;
+            }
+            else {
+                output_string = UnitName + " is exploring";
+            }
+        }
+        else if (unitState == UnitState.IDLE) {
+            if (Inventory != null && Inventory.in_use) {
+                output_string = UnitName + " is holding " + Inventory.count + " " + Inventory.name;
+            }
+            else {
+                output_string = UnitName + " is resting";
+            }
+        }
+
+        return output_string;
+    }
 
     private void OnMouseDown()
     {
@@ -83,13 +128,25 @@ public class UnitController : MonoBehaviour
     {
         // Tell the agent where to go
         navMeshAgent.destination = position;
+
+        unitState = UnitState.WALKING;
+    }
+
+    public void DoWork(string workplace) {
+        unitState = UnitState.OPERATING;
+        target_object = workplace;
+    }
+
+    public void StopWork() {
+        target_object = "";
+        unitState = UnitState.IDLE;
     }
 
 
     public bool GiveItem(Utils.InventoryItem item) {
         if (!Inventory.in_use) {
             Inventory = new Utils.InventoryItem(item.name, item.count);
-            Debug.Log(UnitName + " received " + Inventory.count + " " + Inventory.name);
+            // Debug.Log(UnitName + " received " + Inventory.count + " " + Inventory.name);
             return true;
         }
 
@@ -100,7 +157,9 @@ public class UnitController : MonoBehaviour
         if (Inventory.name.Equals(looking_for)) {
             Utils.InventoryItem to_return = new Utils.InventoryItem(Inventory.name, Inventory.count);
             Inventory.in_use = false;
-            Debug.Log(UnitName + " gave " + to_return.count + " " + to_return.name);
+            Inventory.count = 0;
+            Inventory.name = "";
+            // Debug.Log(UnitName + " gave " + to_return.count + " " + to_return.name);
 
             return to_return;
         }

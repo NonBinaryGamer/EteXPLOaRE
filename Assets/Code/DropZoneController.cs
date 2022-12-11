@@ -16,21 +16,24 @@ public class DropZoneController : MonoBehaviour
     }
 
     private void Awake() {
-        label_objectives.text = generate_objectives_label();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        label_objectives.text = generate_objectives_label();
     }
 
     private void OnTriggerEnter(Collider other) {
+        Debug.Log("Something is in the drop zone!");
+
         if (other.tag.CompareTo("Unit") == 0) {
             UnitController unit = other.GetComponent<UnitController>();
+            Debug.Log(unit);
 
             foreach(Utils.InventoryItem required_item in Globals.REQUIRED_ITEMS) {
                 if (required_item.count < required_item.required) {
+                    Debug.Log(required_item.name);
                     Utils.InventoryItem taken_item = unit.TakeItem(required_item.name);
                     if (taken_item != null) {
                         required_item.count += taken_item.count;

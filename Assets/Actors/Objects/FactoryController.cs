@@ -122,7 +122,7 @@ public class FactoryController : MonoBehaviour
 
             foreach(Utils.InventoryItem item in inputs) {
                 if (item.count < item.max) {
-                    Debug.Log("Taking " + item.name + " from " + unit.UnitName);
+                    // Debug.Log("Taking " + item.name + " from " + unit.UnitName);
                     item.count += unit.TakeItem(item.name).count;
                 }
             }
@@ -133,7 +133,7 @@ public class FactoryController : MonoBehaviour
         foreach (GameObject go in intractableController.interactive_units) {
             UnitController unit = go.GetComponent<UnitController>();
             if (output.count > 0) {
-                Debug.Log("Giving " + output.count + " " + output.name + " to " + unit.UnitName);
+                // Debug.Log("Giving " + output.count + " " + output.name + " to " + unit.UnitName);
                 if (unit.GiveItem(output)) {
                     OutputCount = 0;
                 }
