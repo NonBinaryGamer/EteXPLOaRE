@@ -384,6 +384,8 @@
 "Assets/Code/DropZoneController.cs"
 "Assets/Code/GameManager.cs"
 "Assets/Code/Globals.cs"
+"Assets/Code/musicController.cs"
+"Assets/Code/RocketController.cs"
 "Assets/Code/UnitController.cs"
 "Assets/Code/UnitManager.cs"
 "Assets/Code/UnitsSelection.cs"

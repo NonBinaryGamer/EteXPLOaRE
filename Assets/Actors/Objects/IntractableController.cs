@@ -9,6 +9,7 @@ public class IntractableController : MonoBehaviour
     private ObjectState _State;
 
     public List<GameObject> interactive_units;
+    public List<GameObject> UI_Components;
 
     public ObjectState State {
         set {
@@ -55,6 +56,9 @@ public class IntractableController : MonoBehaviour
         interaction_area = GetComponent<Collider>();
         State = ObjectState.IDLE;
         
+        foreach (GameObject go in UI_Components) {
+            go.SetActive(false);
+        }
     }
 
     private void Awake() {
@@ -89,6 +93,18 @@ public class IntractableController : MonoBehaviour
         if (other.tag.CompareTo("Unit") == 0) {
             UnitController unit = other.gameObject.GetComponent<UnitController>();
             unit.DoWork(ObjectName);
+        }
+    }
+
+    private void OnMouseOver() {
+        foreach (GameObject go in UI_Components) {
+            go.SetActive(true);
+        }
+    }
+
+    private void OnMouseExit() {
+        foreach (GameObject go in UI_Components) {
+            go.SetActive(false);
         }
     }
 }

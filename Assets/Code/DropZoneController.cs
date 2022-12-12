@@ -8,6 +8,7 @@ public class DropZoneController : MonoBehaviour
 
     public TMPro.TMP_Text label_objectives;
     public List<GameObject> interactive_units;
+    public GameObject rocket;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,13 @@ public class DropZoneController : MonoBehaviour
                     if (taken_item != null) {
                         required_item.count += taken_item.count;
                         label_objectives.text = generate_objectives_label();
+                        if(CheckGameWinCondition()) {
+                            rocket.GetComponent<RocketController>().Launch();
+                            GameObject[] go_units = GameObject.FindGameObjectsWithTag("Unit");
+                            foreach (GameObject go_unit in go_units) {
+                                go_unit.GetComponent<UnitController>().GetReadyForLaunch();
+                            }
+                        }
                     }
                 }
             }
@@ -58,5 +66,16 @@ public class DropZoneController : MonoBehaviour
         }
 
         return output_string;
+    }
+
+    private bool CheckGameWinCondition() {
+        bool game_won = true;
+        foreach (Utils.InventoryItem item in Globals.REQUIRED_ITEMS) {
+            if (item.count < item.required) {
+                game_won = false;
+            }
+        }
+
+        return game_won;
     }
 }

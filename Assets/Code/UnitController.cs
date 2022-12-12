@@ -19,6 +19,12 @@ public class UnitController : MonoBehaviour
     public UnitState unitState {get; set;}
     private string target_object;
 
+    public AudioClip[] walkingSounds;
+    public AudioClip teleportSound;
+    private AudioSource audioSource;
+
+    private bool game_won = false;
+
     public enum UnitState
     {
         IDLE,
@@ -45,6 +51,7 @@ public class UnitController : MonoBehaviour
     }
 
     private void Start() {
+        audioSource = GetComponent<AudioSource>();
         label_name = NameLabel.GetComponent<TMP_Text>();
 
         label_name.text = UnitName;
@@ -52,6 +59,9 @@ public class UnitController : MonoBehaviour
     }
 
     private void Update() {
+
+        audioSource.volume = Globals.SFX_VOLUME / 100f / 6f;
+
         if (navMeshAgent == null) {
             navMeshAgent = GetComponent<NavMeshAgent>();
         }
@@ -62,8 +72,20 @@ public class UnitController : MonoBehaviour
             }
             else {
                 unitState = UnitState.WALKING;
+
+                if (!audioSource.isPlaying) {
+                    int random_audio = UnityEngine.Random.Range(0, walkingSounds.Length);
+                    audioSource.clip = walkingSounds[random_audio];
+                    audioSource.Play();
+                }
             }
         }
+
+        if (game_won) {
+            transform.localScale = new Vector3(transform.localScale.x - Time.deltaTime, transform.localScale.y - Time.deltaTime, transform.localScale.z - Time.deltaTime);
+        }
+
+        Debug.Log(unitState.ToString());
     }
 
     override public string ToString() {
@@ -165,5 +187,15 @@ public class UnitController : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void GetReadyForLaunch() {
+        Debug.Log(UnitName + " thinks the game is over");
+        game_won = true;
+        Deselect();
+        audioSource = GetComponent<AudioSource>();
+        audioSource.Stop();
+        audioSource.clip = teleportSound;
+        audioSource.Play();
     }
 }

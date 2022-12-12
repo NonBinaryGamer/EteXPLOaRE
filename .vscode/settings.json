@@ -53,6 +53,7 @@
     },
     "cSpell.words": [
         "Mathf",
-        "raycast"
+        "raycast",
+        "Rigidbody"
     ]
 }

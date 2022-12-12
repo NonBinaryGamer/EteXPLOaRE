@@ -523,6 +523,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1830315036739891784, guid: d601ca78fcad3254ebe95269dc102a90,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2510953303505637377, guid: d601ca78fcad3254ebe95269dc102a90,
         type: 3}
       propertyPath: m_Name
@@ -588,6 +593,26 @@ PrefabInstance:
       propertyPath: objectName
       value: Generator Factory
       objectReference: {fileID: 0}
+    - target: {fileID: 7607096212618086469, guid: d601ca78fcad3254ebe95269dc102a90,
+        type: 3}
+      propertyPath: UI_Components.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7607096212618086469, guid: d601ca78fcad3254ebe95269dc102a90,
+        type: 3}
+      propertyPath: UI_Components.Array.data[3]
+      value: 
+      objectReference: {fileID: 2702293083318036743}
+    - target: {fileID: 7607096212618086469, guid: d601ca78fcad3254ebe95269dc102a90,
+        type: 3}
+      propertyPath: UI_Components.Array.data[4]
+      value: 
+      objectReference: {fileID: 832329966725202240}
+    - target: {fileID: 7607096212618086469, guid: d601ca78fcad3254ebe95269dc102a90,
+        type: 3}
+      propertyPath: UI_Components.Array.data[5]
+      value: 
+      objectReference: {fileID: 330993883338186301}
     - target: {fileID: 9185031591431990481, guid: d601ca78fcad3254ebe95269dc102a90,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

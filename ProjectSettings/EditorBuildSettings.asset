@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/DustyPlanet.unity
+    guid: 30d1fd2ebca1a794eb021ed3ca4e7dc9
   m_configObjects: {}

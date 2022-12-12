@@ -1,10 +1,25 @@
 
 Temp/
-Logs/
+Logs
+Logs/*
+
 
 Library/Artifacts
 Library/BurstCache
+Library/BurstCache/*
 Library/PackageCache
 Library/ShaderCache
+Library/ShaderCache/*
 Library/StateChache
+Library/StateCache/*
+Library/PlayerDataCache
+Library/PlayerDataCache/*
+Library/Bee
+Library/Bee/*
+
 Assets/TextMesh Pro
+Assets/MUSIC
+Assets/TEXTURES
+
+BIN/
+

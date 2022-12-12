@@ -103,6 +103,9 @@ public class FactoryController : MonoBehaviour
                 if (timer_current >= timer_max) {
                     timer_current = 0f;
                     OutputCount += 1;
+                    // foreach(Utils.InventoryItem item in inputs) {
+                    //     item.count -= item.required;
+                    // }
                 }
                 break;
             case IntractableController.ObjectState.BROKEN:
