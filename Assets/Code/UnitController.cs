@@ -48,10 +48,10 @@ public class UnitController : MonoBehaviour
 
     private void Awake() {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start() {
-        audioSource = GetComponent<AudioSource>();
         label_name = NameLabel.GetComponent<TMP_Text>();
 
         label_name.text = UnitName;
@@ -60,6 +60,9 @@ public class UnitController : MonoBehaviour
 
     private void Update() {
 
+        if (audioSource == null) {
+            audioSource = GetComponent<AudioSource>();
+        }
         audioSource.volume = Globals.SFX_VOLUME / 100f / 6f;
 
         if (navMeshAgent == null) {
@@ -85,7 +88,7 @@ public class UnitController : MonoBehaviour
             transform.localScale = new Vector3(transform.localScale.x - Time.deltaTime, transform.localScale.y - Time.deltaTime, transform.localScale.z - Time.deltaTime);
         }
 
-        Debug.Log(unitState.ToString());
+        // Debug.Log(unitState.ToString());
     }
 
     override public string ToString() {

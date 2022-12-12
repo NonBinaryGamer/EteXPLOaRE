@@ -75,7 +75,9 @@ public class IntractableController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag.CompareTo("Unit") == 0) {
-            interactive_units.Add(other.gameObject);
+            if(!interactive_units.Contains(other.gameObject)) {
+                interactive_units.Add(other.gameObject);
+            }
             State = ObjectState.INTERACTION_START;
         }
     }

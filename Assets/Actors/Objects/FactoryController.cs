@@ -53,6 +53,7 @@ public class FactoryController : MonoBehaviour
     void Start()
     {
         OutputCount = 0;
+        CurrentStaff = 0;
 
         label_Inputs.enabled = false;
         label_Inputs.enabled = !CheckInputs();
@@ -66,6 +67,8 @@ public class FactoryController : MonoBehaviour
 
     public void HandleObjectState(IntractableController.ObjectState state)
     {
+        // CurrentStaff = intractableController.interactive_units.Count;
+
         switch (state)
         {
             case IntractableController.ObjectState.IDLE:
@@ -98,6 +101,12 @@ public class FactoryController : MonoBehaviour
                     intractableController.State = IntractableController.ObjectState.INSUFFICIENT_STAFF;
                 }
                 
+                foreach(Utils.InventoryItem item in inputs) {
+                    if (item.count < item.required) {
+                        intractableController.State = IntractableController.ObjectState.INSUFFICIENT_RESOURCES;
+                    }
+                }
+
                 timer_current += Time.deltaTime;
 
                 if (timer_current >= timer_max) {
@@ -113,6 +122,7 @@ public class FactoryController : MonoBehaviour
             case IntractableController.ObjectState.OUTPUT_FULL:
                 break;
             case IntractableController.ObjectState.INSUFFICIENT_RESOURCES:
+                label_Inputs.enabled = !CheckInputs();
                 break;
             case IntractableController.ObjectState.INSUFFICIENT_STAFF:
                 break;
@@ -125,7 +135,7 @@ public class FactoryController : MonoBehaviour
 
             foreach(Utils.InventoryItem item in inputs) {
                 if (item.count < item.max) {
-                    // Debug.Log("Taking " + item.name + " from " + unit.UnitName);
+                    Debug.Log("Taking " + item.name + " from " + unit.UnitName);
                     item.count += unit.TakeItem(item.name).count;
                 }
             }
@@ -136,7 +146,7 @@ public class FactoryController : MonoBehaviour
         foreach (GameObject go in intractableController.interactive_units) {
             UnitController unit = go.GetComponent<UnitController>();
             if (output.count > 0) {
-                // Debug.Log("Giving " + output.count + " " + output.name + " to " + unit.UnitName);
+                Debug.Log("Giving " + output.count + " " + output.name + " to " + unit.UnitName);
                 if (unit.GiveItem(output)) {
                     OutputCount = 0;
                 }

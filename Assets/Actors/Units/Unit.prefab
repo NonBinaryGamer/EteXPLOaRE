@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8264585756677428687}
   - component: {fileID: 2874741952044672515}
   - component: {fileID: 8637954641953858149}
-  - component: {fileID: 8939001569808708494}
   m_Layer: 0
   m_Name: MainModel
   m_TagString: Untagged
@@ -99,29 +98,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8939001569808708494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6780811072667876496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be2c2130c8a9beb4b99ce3dce48bea3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NameLabel: {fileID: 0}
-  selectionCircle: {fileID: 0}
-  UnitName: 
-  Inventory:
-    in_use: 0
-    name: 
-    count: 0
-    max: 0
-    required: 0
-  walkingSounds: []
-  teleportSound: {fileID: 0}
 --- !u!1 &7628907494448856561
 GameObject:
   m_ObjectHideFlags: 0
