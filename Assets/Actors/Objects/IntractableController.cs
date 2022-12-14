@@ -78,6 +78,7 @@ public class IntractableController : MonoBehaviour
             if(!interactive_units.Contains(other.gameObject)) {
                 interactive_units.Add(other.gameObject);
             }
+            // Globals.MANAGER.AddLog("Unit has triggered " + objectName);
             State = ObjectState.INTERACTION_START;
         }
     }

@@ -8,6 +8,9 @@ public class FactoryController : MonoBehaviour
 {
     public Utils.InventoryItem[] inputs;
     
+    
+    public List<GameObject> factory_units;
+    private List<GameObject> units_to_remove = new List<GameObject>();
     public Utils.InventoryItem output;
     private int _output_count;
 
@@ -67,7 +70,7 @@ public class FactoryController : MonoBehaviour
 
     public void HandleObjectState(IntractableController.ObjectState state)
     {
-        // CurrentStaff = intractableController.interactive_units.Count;
+        // CurrentStaff = factory_units.Count;
 
         switch (state)
         {
@@ -112,9 +115,9 @@ public class FactoryController : MonoBehaviour
                 if (timer_current >= timer_max) {
                     timer_current = 0f;
                     OutputCount += 1;
-                    // foreach(Utils.InventoryItem item in inputs) {
-                    //     item.count -= item.required;
-                    // }
+                    foreach(Utils.InventoryItem item in inputs) {
+                        item.count -= item.required;
+                    }
                 }
                 break;
             case IntractableController.ObjectState.BROKEN:
@@ -127,10 +130,15 @@ public class FactoryController : MonoBehaviour
             case IntractableController.ObjectState.INSUFFICIENT_STAFF:
                 break;
         }
+
+        foreach (GameObject go in units_to_remove) {
+            factory_units.Remove(go);
+        }
     }
 
     private void GetResourcesFromUnit() {
-        foreach (GameObject go in intractableController.interactive_units) {
+        foreach (GameObject go in factory_units) {
+            Debug.Log(go.name + " has triggered entry with " + intractableController.ObjectName);
             UnitController unit = go.GetComponent<UnitController>();
 
             foreach(Utils.InventoryItem item in inputs) {
@@ -143,7 +151,7 @@ public class FactoryController : MonoBehaviour
     }
 
     private void GiveResourcesToUnit() {
-        foreach (GameObject go in intractableController.interactive_units) {
+        foreach (GameObject go in factory_units) {
             UnitController unit = go.GetComponent<UnitController>();
             if (output.count > 0) {
                 Debug.Log("Giving " + output.count + " " + output.name + " to " + unit.UnitName);
@@ -169,6 +177,24 @@ public class FactoryController : MonoBehaviour
 
         label_Inputs.text = output_string;
         return inputs_valid;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag.CompareTo("Unit") == 0) {
+            if(!factory_units.Contains(other.gameObject)) {
+                factory_units.Add(other.gameObject);
+            }
+            Globals.MANAGER.AddLog("Unit has triggered a factory");
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.tag.CompareTo("Unit") == 0) {
+            units_to_remove.Add(other.gameObject);
+        }
+    }
+
+    private void OnTriggerStay(Collider other) {
     }
 
 }
