@@ -645,12 +645,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputs: []
+  factory_units: []
   output:
     in_use: 0
     name: Iron
     count: 0
     max: 2
     required: 0
+    image: {fileID: 0}
   required_staff: 1
   timer_max: 10
   label_staff: {fileID: 3096166928362723372}

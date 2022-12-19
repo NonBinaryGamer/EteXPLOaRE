@@ -2383,6 +2383,7 @@ MonoBehaviour:
     count: 0
     max: 0
     required: 1
+    image: {fileID: 0}
   debug_log_container: {fileID: 739392024}
   debug_log_example: {fileID: 1229470875}
 --- !u!114 &759617816
@@ -2726,18 +2727,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '4: This is your rocket and a supply drop off zone.
+  m_text: '4: This is your rocket and a supply drop-off zone.
 
     You can see the
-    required suplies are listed in the top right. Once you have a GENERATOR order
-    your Explorer to take it from the assembler and drop it off in the supply drop
-    off.
+    required supplies are listed in the top right. Once you have a Generator, order
+    your Explorer to take it from the assembler and drop it off in the supply drop-off.
 
-    The supply drop will automatically collect all required resources from
-    the Explorers.
+    The
+    supply drop will automatically collect all required resources from the Explorers.
 
-    When all requirements are met, the rocket will launch and
-    your Explorer witll reunite with their freiends, YAY!'
+    When
+    all requirements are met, the rocket will launch, and your Explorer will reunite
+    with their friends, YAY!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2909,13 +2910,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '2: This is an excavator, this one mines IRON.
+  m_text: '2: This is an excavator, this one mines Iron.
 
     Select your explorer
     and order them to move into the blue area behind to operate it
 
     Wait until
-    at least 10 units of IRON are produced, then move to the left. Explorers with
+    at least 10 units of Iron are produced, then move to the left. Explorers with
     an empty inventory automatically pick up items when leaving the work area.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3088,11 +3089,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '1: This is one of your explorer, the only one on this planet. They are
+  m_text: '1: This is one of your explorers, the only one on this planet. They are
     very lonely! Please help them.
 
-    You can select them by left-click dragging
-    and order selected units to move by right clicking
+    You can select them by left-click dragging,
+    and order selected units to move by right-clicking
 
     When ready, move to the
     left.'
@@ -3867,14 +3868,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '3: This is an assembler, this one will take 10 IRON to make 1 GENERATOR.
+  m_text: '3: This is an assembler, this one will take 10 Iron to make 1 Generator.
 
     Order
     your explorer to enter the blue area to operate the assembler, when entering
-    the work area Explorers will drop off any items they carry, if the factory can
+    the work area, Explorers will drop off any items they carry, if the factory can
     use them.
 
-    Wait until at least 1 GENERATOR are produced, then move to the
+    Wait until at least 1 Generator is produced, then move to the
     left.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

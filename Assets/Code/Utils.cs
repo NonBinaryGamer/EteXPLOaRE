@@ -4,18 +4,22 @@ using UnityEngine;
 public static class Utils
 {
     [Serializable]
-    public class InventoryItem {
+    public class InventoryItem
+    {
         public bool in_use;
         public string name;
         public int count;
         public int max;
         public int required;
+        public Texture2D image;
 
-        public InventoryItem() {
+        public InventoryItem()
+        {
             in_use = false;
         }
 
-        public InventoryItem(string a_name, int a_count) {
+        public InventoryItem(string a_name, int a_count)
+        {
             in_use = true;
             name = a_name;
             count = a_count;
@@ -25,9 +29,10 @@ public static class Utils
     static Texture2D _boxTexture;
     public static Texture2D BoxTexture
     {
-        get 
+        get
         {
-            if (_boxTexture == null) {
+            if (_boxTexture == null)
+            {
                 _boxTexture = new Texture2D(1, 1);
                 _boxTexture.SetPixel(0, 0, Color.cyan);
                 _boxTexture.Apply();
