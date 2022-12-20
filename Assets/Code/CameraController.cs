@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -22,7 +22,8 @@ public class CameraController : MonoBehaviour
     {
 
         int superSpeed = 1;
-        if(Input.GetButton("SpeedUp")) {
+        if (Input.GetButton("SpeedUp"))
+        {
             superSpeed = 5;
         }
 
@@ -31,31 +32,38 @@ public class CameraController : MonoBehaviour
             Mathf.Clamp(main_camera.transform.position.y + (Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * -300 * superSpeed), 2, 25),
             main_camera.transform.position.z + (Input.GetAxis("Vertical") * Time.deltaTime * 10 * superSpeed)
         );
-        
-        if(Input.GetKeyDown(KeyCode.Escape)) {
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
             Debug.Log("Escape is pressed");
             main_menu.SetActive(!main_menu.activeSelf);
+            Globals.GAME_ACTIVE = !main_menu.activeSelf;
         }
 
     }
 
-    public void LoadTutorial() {
+    public void LoadTutorial()
+    {
         SceneManager.LoadScene("SampleScene");
     }
 
-    public void LoadLevel1() {
+    public void LoadLevel1()
+    {
         SceneManager.LoadScene("DustyPlanet");
     }
 
-    public void QuitGame() {
+    public void QuitGame()
+    {
         Application.Quit();
     }
 
-    public void UpdateMusicVolume() {
+    public void UpdateMusicVolume()
+    {
         Globals.MUSIC_VOLUME = (int)(sld_music.value * 100f);
     }
 
-    public void UpdateSFXVolume() {
+    public void UpdateSFXVolume()
+    {
         Globals.SFX_VOLUME = (int)(sld_sfx.value * 100f);
     }
 }

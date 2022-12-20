@@ -9,4 +9,6 @@ public static class Globals
     public static int MUSIC_VOLUME = 5;
     public static int SFX_VOLUME = 33;
     public static GameManager MANAGER;
+
+    public static bool GAME_ACTIVE = true;
 }

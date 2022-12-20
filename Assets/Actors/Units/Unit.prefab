@@ -159,6 +159,7 @@ MonoBehaviour:
     count: 0
     max: 0
     required: 0
+    image: {fileID: 0}
   walkingSounds:
   - {fileID: 8300000, guid: 055787d85e214dc4194fd95b66c13674, type: 3}
   - {fileID: 8300000, guid: 435c73ee15b49d64881ba0214f99a104, type: 3}
@@ -373,7 +374,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5849019102682157911
 RectTransform:
   m_ObjectHideFlags: 0

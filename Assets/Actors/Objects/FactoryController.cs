@@ -63,6 +63,7 @@ public class FactoryController : MonoBehaviour
 
         label_Inputs.enabled = false;
         label_Inputs.enabled = !CheckInputs();
+        name = intractableController.ObjectName;
     }
 
     // Update is called once per frame
@@ -119,7 +120,10 @@ public class FactoryController : MonoBehaviour
                     }
                 }
 
-                timer_current += Time.deltaTime;
+                if (Globals.GAME_ACTIVE)
+                {
+                    timer_current += Time.deltaTime;
+                }
 
                 if (timer_current >= timer_max)
                 {
@@ -146,6 +150,7 @@ public class FactoryController : MonoBehaviour
         {
             factory_units.Remove(go);
         }
+        units_to_remove.Clear();
     }
 
     private void GetResourcesFromUnit()
@@ -157,10 +162,13 @@ public class FactoryController : MonoBehaviour
 
             foreach (Utils.InventoryItem item in inputs)
             {
-                if (item.count < item.max)
+                if (unit.Inventory.name.Equals(item.name))
                 {
-                    Debug.Log("Taking " + item.name + " from " + unit.UnitName);
-                    item.count += unit.TakeItem(item.name).count;
+                    if (item.count < item.max)
+                    {
+                        Debug.Log("Taking " + item.name + " from " + unit.UnitName);
+                        item.count += unit.TakeItem(item.name).count;
+                    }
                 }
             }
         }
@@ -193,7 +201,7 @@ public class FactoryController : MonoBehaviour
         {
             if (factoryInput.count < factoryInput.required)
             {
-                output_string += (factoryInput.required - factoryInput.count).ToString() + " " + factoryInput.name;
+                output_string += (factoryInput.required - factoryInput.count).ToString() + " " + factoryInput.name + " ";
                 inputs_valid = false;
             }
         }
@@ -206,9 +214,10 @@ public class FactoryController : MonoBehaviour
     {
         if (other.tag.CompareTo("Unit") == 0)
         {
-            if (!factory_units.Contains(other.gameObject))
+            if (!this.factory_units.Contains(other.gameObject))
             {
-                factory_units.Add(other.gameObject);
+                this.factory_units.Add(other.gameObject);
+                Debug.Log("Adding " + other.gameObject + " to the list: " + this.factory_units.Count);
             }
             // Globals.MANAGER.AddLog("Unit has triggered a factory");
         }

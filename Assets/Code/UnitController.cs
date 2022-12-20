@@ -16,7 +16,7 @@ public class UnitController : MonoBehaviour
     private NavMeshAgent navMeshAgent;
 
     private UnitState _unitState;
-    public UnitState unitState {get; set;}
+    public UnitState unitState { get; set; }
     private string target_object;
 
     public AudioClip[] walkingSounds;
@@ -46,37 +46,48 @@ public class UnitController : MonoBehaviour
     //     }
     // }
 
-    private void Awake() {
+    private void Awake()
+    {
         navMeshAgent = GetComponent<NavMeshAgent>();
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void Start() {
+    private void Start()
+    {
         label_name = NameLabel.GetComponent<TMP_Text>();
 
         label_name.text = UnitName;
         unitState = UnitState.IDLE;
+
+        name = "Unit: " + UnitName;
     }
 
-    private void Update() {
+    private void Update()
+    {
 
-        if (audioSource == null) {
+        if (audioSource == null)
+        {
             audioSource = GetComponent<AudioSource>();
         }
         audioSource.volume = Globals.SFX_VOLUME / 100f / 6f;
 
-        if (navMeshAgent == null) {
+        if (navMeshAgent == null)
+        {
             navMeshAgent = GetComponent<NavMeshAgent>();
         }
 
-        if (unitState != UnitState.OPERATING) {
-            if (navMeshAgent.velocity.magnitude < 0.1f) {
+        if (unitState != UnitState.OPERATING)
+        {
+            if (navMeshAgent.velocity.magnitude < 0.1f)
+            {
                 unitState = UnitState.IDLE;
             }
-            else {
+            else
+            {
                 unitState = UnitState.WALKING;
 
-                if (!audioSource.isPlaying) {
+                if (!audioSource.isPlaying)
+                {
                     int random_audio = UnityEngine.Random.Range(0, walkingSounds.Length);
                     audioSource.clip = walkingSounds[random_audio];
                     audioSource.Play();
@@ -84,33 +95,44 @@ public class UnitController : MonoBehaviour
             }
         }
 
-        if (game_won) {
+        if (game_won)
+        {
             transform.localScale = new Vector3(transform.localScale.x - Time.deltaTime, transform.localScale.y - Time.deltaTime, transform.localScale.z - Time.deltaTime);
         }
 
+
+        navMeshAgent.isStopped = !Globals.GAME_ACTIVE;
         // Debug.Log(unitState.ToString());
     }
 
-    override public string ToString() {
+    override public string ToString()
+    {
         string output_string = "";
-        
-        if (unitState == UnitState.OPERATING) {
+
+        if (unitState == UnitState.OPERATING)
+        {
             output_string = UnitName + " is operating " + target_object;
         }
-        else if (unitState == UnitState.WALKING) {
-            
-            if (Inventory != null && Inventory.in_use) {
+        else if (unitState == UnitState.WALKING)
+        {
+
+            if (Inventory != null && Inventory.in_use)
+            {
                 output_string = UnitName + " is walking with " + Inventory.count + " " + Inventory.name;
             }
-            else {
+            else
+            {
                 output_string = UnitName + " is exploring";
             }
         }
-        else if (unitState == UnitState.IDLE) {
-            if (Inventory != null && Inventory.in_use) {
+        else if (unitState == UnitState.IDLE)
+        {
+            if (Inventory != null && Inventory.in_use)
+            {
                 output_string = UnitName + " is holding " + Inventory.count + " " + Inventory.name;
             }
-            else {
+            else
+            {
                 output_string = UnitName + " is resting";
             }
         }
@@ -134,7 +156,8 @@ public class UnitController : MonoBehaviour
                 um.Deselect();
         }
         Globals.SELECTED_UNITS.Add(this);
-        if (selectionCircle != null){
+        if (selectionCircle != null)
+        {
             selectionCircle.SetActive(true);
         }
     }
@@ -143,7 +166,8 @@ public class UnitController : MonoBehaviour
     {
         if (!Globals.SELECTED_UNITS.Contains(this)) return;
         Globals.SELECTED_UNITS.Remove(this);
-        if (selectionCircle != null){
+        if (selectionCircle != null)
+        {
             selectionCircle.SetActive(false);
         }
     }
@@ -151,35 +175,48 @@ public class UnitController : MonoBehaviour
     // This function moves the unit to the specified position
     public void MoveUnit(Vector3 position)
     {
-        // Tell the agent where to go
-        navMeshAgent.destination = position;
+        if (Globals.GAME_ACTIVE)
+        {
+            // Tell the agent where to go
+            navMeshAgent.destination = position;
 
-        unitState = UnitState.WALKING;
+            unitState = UnitState.WALKING;
+        }
     }
 
-    public void DoWork(string workplace) {
+    public void DoWork(string workplace)
+    {
         unitState = UnitState.OPERATING;
         target_object = workplace;
     }
 
-    public void StopWork() {
+    public void StopWork()
+    {
         target_object = "";
         unitState = UnitState.IDLE;
     }
 
 
-    public bool GiveItem(Utils.InventoryItem item) {
-        if (!Inventory.in_use) {
+    public bool GiveItem(Utils.InventoryItem item)
+    {
+        if (!Inventory.in_use)
+        {
             Inventory = new Utils.InventoryItem(item.name, item.count);
             // Debug.Log(UnitName + " received " + Inventory.count + " " + Inventory.name);
             return true;
+        }
+        else
+        {
+            Debug.Log(UnitName + " is already holding " + Inventory.count + " " + Inventory.name);
         }
 
         return false;
     }
 
-    public Utils.InventoryItem TakeItem(string looking_for) {
-        if (Inventory.name.Equals(looking_for)) {
+    public Utils.InventoryItem TakeItem(string looking_for)
+    {
+        if (Inventory.name.Equals(looking_for))
+        {
             Utils.InventoryItem to_return = new Utils.InventoryItem(Inventory.name, Inventory.count);
             Inventory.in_use = false;
             Inventory.count = 0;
@@ -192,7 +229,8 @@ public class UnitController : MonoBehaviour
         return null;
     }
 
-    public void GetReadyForLaunch() {
+    public void GetReadyForLaunch()
+    {
         Debug.Log(UnitName + " thinks the game is over");
         game_won = true;
         Deselect();

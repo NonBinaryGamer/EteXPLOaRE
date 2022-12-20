@@ -18,24 +18,30 @@ public class GameManager : MonoBehaviour
     {
         Globals.REQUIRED_ITEMS = required_items;
         Globals.MANAGER = this;
-        offset_log_location = debug_log_container.transform.GetChild(debug_log_container.transform.childCount - 1).GetComponent<RectTransform>().anchoredPosition.y - 22;
+        if (debug_log_container != null)
+        {
+            offset_log_location = debug_log_container.transform.GetChild(debug_log_container.transform.childCount - 1).GetComponent<RectTransform>().anchoredPosition.y - 22;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
         }
     }
 
-    public void AddLog(string value) {
+    public void AddLog(string value)
+    {
         AddLog(value, Color.white);
     }
 
-    public void AddLog(string value, Color color) {
+    public void AddLog(string value, Color color)
+    {
         GameObject new_log_object = Instantiate(debug_log_example, debug_log_container.transform);
         new_log_object.GetComponent<RectTransform>().anchoredPosition = new Vector3(
-            debug_log_container.transform.GetChild(debug_log_container.transform.childCount - 1).GetComponent<RectTransform>().anchoredPosition.x, 
+            debug_log_container.transform.GetChild(debug_log_container.transform.childCount - 1).GetComponent<RectTransform>().anchoredPosition.x,
             offset_log_location
         );
         offset_log_location -= 22;
