@@ -11,6 +11,7 @@ public class UnitController : MonoBehaviour
     private TMP_Text label_name;
     public GameObject selectionCircle;
     public string UnitName = "Honest Explorer";
+    public Tooltip tooltip;
 
     public Utils.InventoryItem Inventory = null;
     private NavMeshAgent navMeshAgent;
@@ -60,46 +61,51 @@ public class UnitController : MonoBehaviour
         unitState = UnitState.IDLE;
 
         name = "Unit: " + UnitName;
+        tooltip.SetHeader(UnitName);
+        tooltip.SetContent("");
     }
 
     private void Update()
     {
 
-        if (audioSource == null)
-        {
-            audioSource = GetComponent<AudioSource>();
-        }
-        audioSource.volume = Globals.SFX_VOLUME / 100f / 6f;
-
-        if (navMeshAgent == null)
-        {
-            navMeshAgent = GetComponent<NavMeshAgent>();
-        }
-
-        if (unitState != UnitState.OPERATING)
-        {
-            if (navMeshAgent.velocity.magnitude < 0.1f)
-            {
-                unitState = UnitState.IDLE;
-            }
-            else
-            {
-                unitState = UnitState.WALKING;
-
-                if (!audioSource.isPlaying)
-                {
-                    int random_audio = UnityEngine.Random.Range(0, walkingSounds.Length);
-                    audioSource.clip = walkingSounds[random_audio];
-                    audioSource.Play();
-                }
-            }
-        }
-
         if (game_won)
         {
             transform.localScale = new Vector3(transform.localScale.x - Time.deltaTime, transform.localScale.y - Time.deltaTime, transform.localScale.z - Time.deltaTime);
         }
+        else
+        {
+            if (audioSource == null)
+            {
+                audioSource = GetComponent<AudioSource>();
+            }
+            audioSource.volume = Globals.SFX_VOLUME / 100f / 6f;
 
+            if (navMeshAgent == null)
+            {
+                navMeshAgent = GetComponent<NavMeshAgent>();
+            }
+
+            if (unitState != UnitState.OPERATING)
+            {
+                if (navMeshAgent.velocity.magnitude < 0.1f)
+                {
+                    unitState = UnitState.IDLE;
+                }
+                else
+                {
+                    unitState = UnitState.WALKING;
+
+                    if (!audioSource.isPlaying)
+                    {
+                        int random_audio = UnityEngine.Random.Range(0, walkingSounds.Length);
+                        audioSource.clip = walkingSounds[random_audio];
+                        audioSource.Play();
+                    }
+                }
+            }
+        }
+
+        tooltip.SetContent(ToString().Substring(UnitName.Length + 4));
 
         navMeshAgent.isStopped = !Globals.GAME_ACTIVE;
         // Debug.Log(unitState.ToString());
@@ -231,7 +237,7 @@ public class UnitController : MonoBehaviour
 
     public void GetReadyForLaunch()
     {
-        Debug.Log(UnitName + " thinks the game is over");
+        // Debug.Log(UnitName + " thinks the game is over");
         game_won = true;
         Deselect();
         audioSource = GetComponent<AudioSource>();

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class IntractableController : MonoBehaviour
 {
@@ -10,13 +11,16 @@ public class IntractableController : MonoBehaviour
 
     public List<GameObject> interactive_units;
     public List<GameObject> UI_Components;
+    public Tooltip tooltip;
 
-    public ObjectState State {
-        set {
+    public ObjectState State
+    {
+        set
+        {
             _State = value;
             state_label.text = _State.ToString();
         }
-        get {return _State;}
+        get { return _State; }
     }
 
     public string objectName;
@@ -25,12 +29,14 @@ public class IntractableController : MonoBehaviour
 
     private List<GameObject> units_to_remove = new List<GameObject>();
 
-    public string ObjectName {
-        set {
+    public string ObjectName
+    {
+        set
+        {
             _objectName = value;
             type_label.text = _objectName.ToString();
         }
-        get {return _objectName;}
+        get { return _objectName; }
     }
 
     public GameObject interaction_model;
@@ -55,27 +61,34 @@ public class IntractableController : MonoBehaviour
     {
         interaction_area = GetComponent<Collider>();
         State = ObjectState.IDLE;
-        
-        foreach (GameObject go in UI_Components) {
+        tooltip.SetHeader(objectName);
+
+        foreach (GameObject go in UI_Components)
+        {
             go.SetActive(false);
         }
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         ObjectName = objectName;
     }
 
     // Update is called once per frame
     void Update()
     {
-        foreach (GameObject go in units_to_remove) {
+        foreach (GameObject go in units_to_remove)
+        {
             interactive_units.Remove(go);
         }
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if (other.tag.CompareTo("Unit") == 0) {
-            if(!interactive_units.Contains(other.gameObject)) {
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag.CompareTo("Unit") == 0)
+        {
+            if (!interactive_units.Contains(other.gameObject))
+            {
                 interactive_units.Add(other.gameObject);
             }
             // Globals.MANAGER.AddLog("Unit has triggered " + objectName);
@@ -83,8 +96,10 @@ public class IntractableController : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other) {
-        if (other.tag.CompareTo("Unit") == 0) {
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag.CompareTo("Unit") == 0)
+        {
             State = ObjectState.INTERACTION_END;
             units_to_remove.Add(other.gameObject);
             UnitController unit = other.gameObject.GetComponent<UnitController>();
@@ -92,22 +107,30 @@ public class IntractableController : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other) {
-        if (other.tag.CompareTo("Unit") == 0) {
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag.CompareTo("Unit") == 0)
+        {
             UnitController unit = other.gameObject.GetComponent<UnitController>();
             unit.DoWork(ObjectName);
         }
     }
 
-    private void OnMouseOver() {
-        foreach (GameObject go in UI_Components) {
-            go.SetActive(true);
-        }
+    private void OnMouseOver()
+    {
+        // tooltip.Show();
+        // foreach (GameObject go in UI_Components)
+        // {
+        //     go.SetActive(true);
+        // }
     }
 
-    private void OnMouseExit() {
-        foreach (GameObject go in UI_Components) {
-            go.SetActive(false);
-        }
+    private void OnMouseExit()
+    {
+        // tooltip.Hide();
+        // foreach (GameObject go in UI_Components)
+        // {
+        //     go.SetActive(false);
+        // }
     }
 }

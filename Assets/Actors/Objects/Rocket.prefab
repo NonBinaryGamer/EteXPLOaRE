@@ -79,7 +79,7 @@ PrefabInstance:
     - target: {fileID: 1830315036739891784, guid: d601ca78fcad3254ebe95269dc102a90,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1830315036739891784, guid: d601ca78fcad3254ebe95269dc102a90,
         type: 3}
@@ -210,6 +210,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7359938215678339710, guid: d601ca78fcad3254ebe95269dc102a90,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7549876878982363795, guid: d601ca78fcad3254ebe95269dc102a90,
         type: 3}
@@ -5180,3 +5185,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 075686fd403d0964fb2e7ded521618b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenu: {fileID: 0}

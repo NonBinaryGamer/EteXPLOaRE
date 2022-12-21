@@ -11,7 +11,13 @@ public class UnitsSelection : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!Globals.GAME_ACTIVE)
+        {
+            _isDraggingMouseBox = false;
+            _DeselectAllUnits();
+        }
+
+        if (Input.GetMouseButtonDown(0) && Globals.GAME_ACTIVE)
         {
             _isDraggingMouseBox = true;
             _dragStartPosition = Input.mousePosition;

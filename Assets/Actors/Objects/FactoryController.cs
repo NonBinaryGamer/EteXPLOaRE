@@ -79,8 +79,10 @@ public class FactoryController : MonoBehaviour
         switch (state)
         {
             case IntractableController.ObjectState.IDLE:
-                return;
+                intractableController.tooltip.SetContent("Waiting for staff.");
+                break;
             case IntractableController.ObjectState.INTERACTION_START:
+                intractableController.tooltip.SetContent("Fire up in progress.");
                 CurrentStaff += 1;
                 GetResourcesFromUnit();
                 if (CheckInputs())
@@ -95,6 +97,7 @@ public class FactoryController : MonoBehaviour
                 }
                 break;
             case IntractableController.ObjectState.INTERACTION_END:
+                intractableController.tooltip.SetContent("Shutting down.");
                 CurrentStaff -= 1;
                 GiveResourcesToUnit();
                 intractableController.State = IntractableController.ObjectState.IDLE;
@@ -102,6 +105,7 @@ public class FactoryController : MonoBehaviour
             case IntractableController.ObjectState.BEING_MOVED:
                 break;
             case IntractableController.ObjectState.WORKING:
+                intractableController.tooltip.SetContent("Operating.");
                 if (OutputCount >= output.max)
                 {
                     intractableController.State = IntractableController.ObjectState.OUTPUT_FULL;
@@ -138,12 +142,49 @@ public class FactoryController : MonoBehaviour
             case IntractableController.ObjectState.BROKEN:
                 break;
             case IntractableController.ObjectState.OUTPUT_FULL:
+                intractableController.tooltip.SetContent("The output is full.");
                 break;
             case IntractableController.ObjectState.INSUFFICIENT_RESOURCES:
+                intractableController.tooltip.SetContent("Missing required resources.");
                 label_Inputs.enabled = !CheckInputs();
                 break;
             case IntractableController.ObjectState.INSUFFICIENT_STAFF:
+                intractableController.tooltip.SetContent("Not enough staff.");
                 break;
+        }
+        intractableController.tooltip.AddContent("");
+
+        if (required_staff > 0)
+        {
+            intractableController.tooltip.AddContent("Staff: (Requires " + required_staff + ")");
+            foreach (GameObject go in factory_units)
+            {
+                UnitController unit = go.GetComponent<UnitController>();
+                intractableController.tooltip.AddContent(unit.UnitName);
+            }
+            if (factory_units.Count == 0)
+            {
+                intractableController.tooltip.AddContent("None");
+            }
+
+            intractableController.tooltip.AddContent("");
+        }
+
+        if (inputs.Length > 0)
+        {
+            intractableController.tooltip.AddContent("Consumes: ");
+            foreach (Utils.InventoryItem item in inputs)
+            {
+                intractableController.tooltip.AddContent(item.required + " " + item.name + " (has " + item.count + ")");
+            }
+            intractableController.tooltip.AddContent("");
+        }
+
+        if (output != null)
+        {
+            intractableController.tooltip.AddContent("Produces: ");
+            intractableController.tooltip.AddContent(output.count + "/" + output.max + " " + output.name);
+            intractableController.tooltip.AddContent("");
         }
 
         foreach (GameObject go in units_to_remove)
