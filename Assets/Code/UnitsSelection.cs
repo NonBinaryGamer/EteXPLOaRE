@@ -26,9 +26,11 @@ public class UnitsSelection : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
             _isDraggingMouseBox = false;
 
+        // If we are dragging the mouse box, select units
         if (_isDraggingMouseBox && _dragStartPosition != Input.mousePosition)
             _SelectUnitsInDraggingBox();
 
+        // If we have units selected, deselect them if we click on the terrain
         if (Globals.SELECTED_UNITS.Count > 0)
         {
             if (Input.GetKeyDown(KeyCode.Escape))

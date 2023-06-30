@@ -69,8 +69,11 @@ public class Tooltip : MonoBehaviour
         // {
         //     position.y = Screen.height - padding.y;
         // }
-
+#if UNITY_EDITOR
+        position = Vector2.zero;
+#else
         position += padding;
+#endif
 
         transform.position = position;
     }
